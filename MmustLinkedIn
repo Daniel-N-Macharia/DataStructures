@@ -1,0 +1,145 @@
+#include<iostream>
+using namespace std;
+
+template<class T>
+class node
+{
+    private:
+    T item;
+    node *next;
+    public:
+    node(){item = NULL;}
+    
+    void setNext(node *n)
+    {
+        this->next = n;
+    }
+    
+    node  *getNext(){ return next;}
+    
+    void setItem(T i)
+    {
+        item = i;
+    }
+    
+    T getItem(){ return item;}
+};
+
+template<class N>
+class LL
+{
+    private:
+    node<N> head;
+    node<N> tail;
+    int count;
+    
+    public:
+    LL()
+    {
+        head.setNext(&tail);
+        count = 0;
+    }
+    
+    bool isEmpty()
+    {
+       if((head.getNext())->getItem() == NULL)
+        return true;
+       else 
+        return false;
+        
+    }
+    
+    void add(node<N> *newNode)
+    {
+        newNode->setNext(head.getNext());
+        head.setNext(newNode);
+        count++;
+    }
+    
+    void del()
+    {
+        node<N> *t = head.getNext();
+        head.setNext(t->getNext());
+        count--;
+    }
+    
+    void disp()
+    {
+        node<N> *temp;
+        temp = head.getNext();
+        
+        while(temp->getItem() != NULL)
+        {
+            cout<<temp->getItem()<<endl;
+            
+            temp = temp->getNext();
+        }
+    }
+};
+
+template<class M>
+class mmustlinkedIn
+{
+    private:
+    LL<M> mmustLL;
+    
+    public:
+    void addMember(node<M> *newMember)
+    {
+        mmustLL.add(newMember);
+    }
+    
+    void removeMember()
+    {
+        mmustLL.del();
+    }
+    
+    void showMembers()
+    {
+        mmustLL.disp();
+    }
+};
+
+int main()
+{
+    //testing the classes
+    char reg1[] = "SIT/B/01-02261/2021";
+    char reg2[] = "SIT/B/01-02262/2021";
+    char reg3[] = "SIK/B/01-01156/2021";
+    char reg4[] = "SIK/B/01-01151/2021";
+    char reg5[] = "COM/B/01-02261/2021";
+    char reg6[] = "COM/B/01-03161/2021";
+    char reg7[] = "COM/B/01-03176/2021";
+    
+    mmustlinkedIn<char*> students;
+    
+    node<char*> regNo1;
+    node<char*> regNo2;
+    node<char*> regNo3;
+    node<char*> regNo4;
+    node<char*> regNo5;
+    node<char*> regNo6;
+    node<char*> regNo7;
+    
+    regNo1.setItem(reg1);
+    regNo2.setItem(reg2);
+    regNo3.setItem(reg3);
+    regNo4.setItem(reg4);
+    regNo5.setItem(reg5);
+    regNo6.setItem(reg6);
+    regNo7.setItem(reg7);
+    
+    students.addMember(&regNo1);
+    students.addMember(&regNo2);
+    students.addMember(&regNo3);
+    students.addMember(&regNo4);
+    students.addMember(&regNo5);
+    students.addMember(&regNo6);
+    students.addMember(&regNo7);
+    
+    
+    students.showMembers();
+    
+    
+    return 0;
+}
