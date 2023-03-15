@@ -1,0 +1,160 @@
+#include<iostream>
+using namespace std;
+
+template<class T>
+class node
+{
+    private:
+    T item;
+    node *next;
+    node *prev;
+    public:
+    node(){item = NULL;}
+    
+    void setNext(node *n)
+    {
+        this->next = n;
+    }
+    
+    node  *getNext(){ return next;}
+    
+    void setPrev(node *p)
+    {
+        this->prev = p;
+    }
+    
+    node  *getPrev(){ return prev;}
+    
+    void setItem(T i)
+    {
+        item = i;
+    }
+    
+    T getItem(){ return item;}
+};
+
+template<class S>
+class stack
+{
+    private:
+    node<S> *bottom;
+    node<S> *topItem;
+     int count;
+    public:
+    stack()
+    {
+        count = 0;
+        bottom->setItem(NULL);
+    }
+     
+    bool isEmpty()
+    {
+       if(count == 0)
+        return true;
+       else
+        return false;
+    }
+    
+    void push(node<S> *newNode)
+    {
+        if(count == 0)
+        {
+           bottom->setNext(newNode);
+           newNode->setPrev(bottom);
+            topItem = newNode;
+            count++;
+            cout<<"\n pushed bottom\n";
+         }
+        else
+        {
+           topItem->setNext(newNode);
+           newNode->setPrev(topItem);
+           topItem = newNode;
+            count++;
+            
+          cout<<"\n pushed another element\n";
+        }
+        
+    }
+    
+    int size(){return count;}
+    
+    node<S> *pop()
+    {
+        if( isEmpty() )
+          {
+            cout<<"stack is empty"<<endl;
+            return NULL;
+           }
+        
+       
+            node<S> *t = topItem;
+            
+            topItem = topItem->getPrev();
+            count--;
+            
+            return t;
+    }
+    
+    node<S> *top()
+    {
+        if( isEmpty() )
+        {
+            cout<<"stack is empty"<<endl;
+            return NULL;
+        }
+        else
+        return topItem;
+    }
+    
+};
+
+int main()
+{
+    //testing the classes
+    char reg1[] = "SIT/B/01-02261/2021";
+    char reg2[] = "SIT/B/01-02262/2021";
+    char reg3[] = "SIK/B/01-01156/2021";
+    char reg4[] = "SIK/B/01-01151/2021";
+    char reg5[] = "COM/B/01-02261/2021";
+    char reg6[] = "COM/B/01-03161/2021";
+    char reg7[] = "COM/B/01-03176/2021";
+    
+    stack<char*> students;
+    
+    node<char*> regNo1;
+    node<char*> regNo2;
+    node<char*> regNo3;
+    node<char*> regNo4;
+    node<char*> regNo5;
+    node<char*> regNo6;
+    node<char*> regNo7;
+    
+    regNo1.setItem(reg1);
+    regNo2.setItem(reg2);
+    regNo3.setItem(reg3);
+    regNo4.setItem(reg4);
+    regNo5.setItem(reg5);
+    regNo6.setItem(reg6);
+    regNo7.setItem(reg7);
+    
+    students.push(&regNo1);
+    students.push(&regNo2);
+    students.push(&regNo3);
+    students.push(&regNo4);
+    students.push(&regNo5);
+    students.push(&regNo6);
+    students.push(&regNo7);
+    
+    cout<<"Popped "      <<(students.top())->getItem()
+    <<" from stack"<<endl;
+    cout<<students.size()<<" elements in stack"<<endl;
+    
+    for(int i = 0; i < students.size(); i++)
+      cout<<"Popped   "
+     <<(students.pop())->getItem()<<endl;
+    
+    cout<<students.size()<<" elements in stack"<<endl;
+    
+    return 0;
+}
